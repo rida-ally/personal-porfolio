@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rida Tahir — Senior UI/UX Designer & Computer Scientist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        obsidian: '#0F0F1A',
+        navy: '#1A2A4A',
+        cyan: { DEFAULT: '#22D3EE', dim: '#0E7490', glow: '#67E8F9' },
+        slate: { light: '#E2E8F0', mid: '#94A3B8', dark: '#475569' },
+        gold: '#F59E0B',
+      },
+      fontFamily: {
+        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
+      },
+      backgroundImage: {
+        'hero-radial': 'radial-gradient(ellipse 80% 60% at 60% 40%, #1A2A4A 0%, #0F0F1A 65%)',
+        'card-shine': 'linear-gradient(135deg, rgba(34,211,238,0.06) 0%, rgba(34,211,238,0) 60%)',
+      },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+        'slide-up': 'slideUp 0.7s ease forwards',
+        'fade-in': 'fadeIn 1s ease forwards',
+        'scan': 'scan 3s linear infinite',
+      },
+      keyframes: {
+        float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-12px)' } },
+        pulseGlow: { '0%,100%': { boxShadow: '0 0 16px 2px rgba(34,211,238,0.25)' }, '50%': { boxShadow: '0 0 40px 8px rgba(34,211,238,0.55)' } },
+        slideUp: { from: { opacity: 0, transform: 'translateY(32px)' }, to: { opacity: 1, transform: 'translateY(0)' } },
+        fadeIn: { from: { opacity: 0 }, to: { opacity: 1 } },
+        scan: { '0%': { top: '0%' }, '100%': { top: '100%' } },
+      },
+      boxShadow: {
+        'cyan-glow': '0 0 24px 4px rgba(34,211,238,0.35)',
+        'cyan-glow-lg': '0 0 48px 8px rgba(34,211,238,0.30)',
+        'card': '0 4px 32px rgba(0,0,0,0.45)',
+      },
+    }
+  }
+}
+</script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: #0F0F1A;
+    color: #E2E8F0;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #0F0F1A; }
+  ::-webkit-scrollbar-thumb { background: #22D3EE; border-radius: 4px; }
+
+  /* ── Noise grain overlay ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.55;
+  }
+
+  /* ── Animated grid lines ── */
+  .grid-bg {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(34,211,238,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34,211,238,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* ── Section headers ── */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #22D3EE;
+  }
+  .section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    color: #E2E8F0;
+    line-height: 1.15;
+  }
+
+  /* ── Glow divider ── */
+  .glow-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #22D3EE 40%, transparent);
+    opacity: 0.4;
+  }
+
+  /* ── Nav link ── */
+  .nav-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #94A3B8;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute; bottom: -3px; left: 0; width: 0; height: 1px;
+    background: #22D3EE;
+    transition: width 0.3s;
+  }
+  .nav-link:hover { color: #22D3EE; }
+  .nav-link:hover::after { width: 100%; }
+
+  /* ── Skill pill ── */
+  .skill-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px;
+    border: 1px solid rgba(34,211,238,0.2);
+    border-radius: 99px;
+    font-size: 0.8rem;
+    color: #94A3B8;
+    background: rgba(34,211,238,0.04);
+    transition: all 0.25s;
+  }
+  .skill-pill:hover {
+    border-color: #22D3EE;
+    color: #22D3EE;
+    background: rgba(34,211,238,0.10);
+    transform: translateY(-2px);
+  }
+
+  /* ── Project card ── */
+  .project-card {
+    background: linear-gradient(135deg, rgba(26,42,74,0.55) 0%, rgba(15,15,26,0.85) 100%);
+    border: 1px solid rgba(34,211,238,0.13);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.23,1,0.32,1), box-shadow 0.35s ease, border-color 0.35s;
+    backdrop-filter: blur(8px);
+  }
+  .project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 64px rgba(34,211,238,0.18), 0 0 0 1px rgba(34,211,238,0.35);
+    border-color: rgba(34,211,238,0.4);
+  }
+
+  /* ── Social icon button ── */
+  .social-btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 12px;
+    border: 1px solid rgba(34,211,238,0.2);
+    background: rgba(34,211,238,0.05);
+    color: #94A3B8;
+    transition: all 0.25s;
+  }
+  .social-btn:hover {
+    background: rgba(34,211,238,0.14);
+    border-color: #22D3EE;
+    color: #22D3EE;
+    transform: scale(1.12) translateY(-2px);
+    box-shadow: 0 8px 24px rgba(34,211,238,0.25);
+  }
+
+  /* ── CTA button ── */
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 28px; border-radius: 8px;
+    background: #22D3EE; color: #0F0F1A;
+    font-weight: 600; font-size: 0.88rem;
+    letter-spacing: 0.04em;
+    transition: all 0.25s;
+    border: 1px solid #22D3EE;
+  }
+  .btn-primary:hover {
+    background: transparent;
+    color: #22D3EE;
+    box-shadow: 0 0 32px rgba(34,211,238,0.35);
+    transform: translateY(-2px);
+  }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 28px; border-radius: 8px;
+    background: transparent; color: #E2E8F0;
+    font-weight: 600; font-size: 0.88rem;
+    letter-spacing: 0.04em;
+    border: 1px solid rgba(226,232,240,0.25);
+    transition: all 0.25s;
+  }
+  .btn-secondary:hover {
+    border-color: #22D3EE; color: #22D3EE;
+    transform: translateY(-2px);
+  }
+
+  /* ── Contact input ── */
+  .form-input {
+    width: 100%; padding: 13px 18px;
+    background: rgba(26,42,74,0.35);
+    border: 1px solid rgba(34,211,238,0.15);
+    border-radius: 10px;
+    color: #E2E8F0; font-size: 0.9rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .form-input::placeholder { color: #475569; }
+  .form-input:focus {
+    border-color: #22D3EE;
+    box-shadow: 0 0 0 3px rgba(34,211,238,0.12);
+  }
+
+  /* ── Profile image ring ── */
+  .profile-ring {
+    position: relative; display: inline-block;
+    border-radius: 50%;
+    padding: 4px;
+    background: conic-gradient(#22D3EE, #1A2A4A 40%, #22D3EE 70%, #1A2A4A);
+    animation: spin 6s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .profile-ring > .ring-inner {
+    border-radius: 50%;
+    padding: 4px;
+    background: #0F0F1A;
+  }
+  .profile-ring img {
+    border-radius: 50%;
+    display: block;
+  }
+
+  /* ── Typewriter cursor ── */
+  .cursor { animation: blink 1.1s step-end infinite; }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* ── Floating orbs ── */
+  .orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(90px);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ── Section fade-in on scroll ── */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── Stat card ── */
+  .stat-card {
+    background: rgba(26,42,74,0.4);
+    border: 1px solid rgba(34,211,238,0.12);
+    border-radius: 14px; padding: 20px;
+    text-align: center;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(34,211,238,0.14); }
+
+  /* ── Tag badge ── */
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.08em;
+    padding: 3px 10px; border-radius: 99px;
+    background: rgba(34,211,238,0.10);
+    color: #22D3EE; border: 1px solid rgba(34,211,238,0.25);
+  }
+
+  /* ── Progress bar ── */
+  .skill-bar-bg { background: rgba(34,211,238,0.10); border-radius: 99px; height: 5px; overflow: hidden; }
+  .skill-bar-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, #0E7490, #22D3EE); transition: width 1.2s cubic-bezier(0.23,1,0.32,1); width: 0; }
+
+  /* Hero name gradient */
+  .name-gradient {
+    background: linear-gradient(135deg, #E2E8F0 30%, #22D3EE 70%, #67E8F9);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  /* ── Mobile nav ── */
+  #mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+  #mobile-menu.open { max-height: 400px; }
+</style>
+</head>
+<body class="relative">
+
+<!-- Grid background -->
+<div class="grid-bg"></div>
+
+<!-- ════════════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════════ -->
+<header id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div class="flex items-center justify-between h-16 md:h-18">
+      <!-- Logo -->
+      <a href="#hero" class="flex items-center gap-2">
+        <span class="w-8 h-8 rounded-lg bg-cyan-DEFAULT flex items-center justify-center text-obsidian font-serif font-bold text-lg leading-none">R</span>
+        <span class="font-mono text-xs tracking-widest text-slate-mid hidden sm:block">rida.tahir</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- Social + CTA -->
+      <div class="hidden md:flex items-center gap-3">
+        <a href="https://instagram.com/pinkskie" target="_blank" class="social-btn" aria-label="Instagram">
+          <i data-lucide="instagram" class="w-4 h-4"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/rida-tahir-b19534307/" target="_blank" class="social-btn" aria-label="LinkedIn">
+          <i data-lucide="linkedin" class="w-4 h-4"></i>
+        </a>
+        <a href="https://github.com/rida-ally" target="_blank" class="social-btn" aria-label="GitHub">
+          <i data-lucide="github" class="w-4 h-4"></i>
+        </a>
+        <a href="#contact" class="btn-primary ml-2">
+          <i data-lucide="mail" class="w-4 h-4"></i> Hire Me
+        </a>
+      </div>
+
+      <!-- Hamburger -->
+      <button id="menu-toggle" class="md:hidden text-slate-mid hover:text-cyan-DEFAULT transition-colors" aria-label="Menu">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden">
+      <div class="pb-5 pt-2 flex flex-col gap-1 border-t border-white/5 mt-1">
+        <a href="#about" class="nav-link py-3 px-2 block">About</a>
+        <a href="#skills" class="nav-link py-3 px-2 block">Skills</a>
+        <a href="#projects" class="nav-link py-3 px-2 block">Projects</a>
+        <a href="#contact" class="nav-link py-3 px-2 block">Contact</a>
+        <div class="flex items-center gap-3 pt-2 px-2">
+          <a href="https://instagram.com/pinkskie" target="_blank" class="social-btn"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+          <a href="https://www.linkedin.com/in/rida-tahir-b19534307/" target="_blank" class="social-btn"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+          <a href="https://github.com/rida-ally" target="_blank" class="social-btn"><i data-lucide="github" class="w-4 h-4"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════ -->
+<section id="hero" class="relative min-h-screen flex items-center overflow-hidden" style="background: radial-gradient(ellipse 80% 60% at 62% 44%, #1A2A4A 0%, #0F0F1A 68%);">
+  <!-- Orbs -->
+  <div class="orb w-96 h-96 bg-cyan-DEFAULT opacity-10 top-0 right-0 -translate-y-1/2 translate-x-1/4"></div>
+  <div class="orb w-72 h-72 bg-blue-800 opacity-20 bottom-0 left-0 translate-y-1/3 -translate-x-1/4"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-10 pt-28 pb-20 w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Text -->
+      <div>
+        <div class="flex items-center gap-3 mb-6">
+          <div class="h-px w-10 bg-cyan-DEFAULT opacity-70"></div>
+          <span class="section-label">Portfolio 2026</span>
+        </div>
+
+        <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl font-black leading-none mb-2">
+          <span class="name-gradient">Rida</span><br/>
+          <span class="name-gradient">Tahir</span>
+        </h1>
+
+        <p class="font-mono text-cyan-DEFAULT text-sm tracking-widest mt-4 mb-6">
+          Senior UI/UX Designer<span class="cursor text-slate-mid"> &</span> Computer Scientist
+        </p>
+
+        <p class="text-slate-mid leading-relaxed max-w-md text-base mb-10">
+          Crafting digital experiences that sit at the intersection of <em class="text-slate-light not-italic font-medium">human psychology</em> and <em class="text-slate-light not-italic font-medium">technical precision</em>. Based in Islamabad, Pakistan — designing for a global audience.
+        </p>
+
+        <div class="flex flex-wrap gap-4 mb-12">
+          <a href="#projects" class="btn-primary">
+            <i data-lucide="layout-grid" class="w-4 h-4"></i> View Work
+          </a>
+          <a href="#contact" class="btn-secondary">
+            <i data-lucide="send" class="w-4 h-4"></i> Let's Talk
+          </a>
+        </div>
+
+        <!-- Stats row -->
+        <div class="grid grid-cols-3 gap-4">
+          <div class="stat-card">
+            <p class="font-serif text-3xl font-bold text-cyan-DEFAULT">5+</p>
+            <p class="text-xs text-slate-mid mt-1 font-mono tracking-wide">Projects</p>
+          </div>
+          <div class="stat-card">
+            <p class="font-serif text-3xl font-bold text-cyan-DEFAULT">3+</p>
+            <p class="text-xs text-slate-mid mt-1 font-mono tracking-wide">Yrs Exp.</p>
+          </div>
+          <div class="stat-card">
+            <p class="font-serif text-3xl font-bold text-cyan-DEFAULT">12+</p>
+            <p class="text-xs text-slate-mid mt-1 font-mono tracking-wide">Tools</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile image -->
+      <div class="flex justify-center lg:justify-end">
+        <div class="relative">
+          <!-- Outer decorative ring (spinning) -->
+          <div class="profile-ring animate-float" style="width:300px;height:300px;">
+            <div class="ring-inner" style="width:100%;height:100%;">
+              <img
+                src="myphoto.jpg.jfif"
+                alt="Rida Tahir"
+                onerror="this.src='https://placehold.co/320x320/152238/E2E8F0?text=Rida+Tahir'"
+                style="width:100%;height:100%;object-fit:cover;"
+              />
+            </div>
+          </div>
+
+          <!-- Scan line -->
+          <div class="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
+            <div class="absolute left-0 right-0 h-0.5 bg-cyan-DEFAULT opacity-20 animate-scan" style="top:0%"></div>
+          </div>
+
+          <!-- Badge: available -->
+          <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-obsidian border border-cyan-DEFAULT/30 rounded-full px-4 py-2 shadow-cyan-glow">
+            <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+            <span class="text-xs font-mono text-slate-light tracking-widest">Available for Work</span>
+          </div>
+
+          <!-- Floating decoration cards -->
+          <div class="absolute -top-6 -left-10 bg-navy/70 backdrop-blur border border-cyan-DEFAULT/15 rounded-xl px-4 py-3 shadow-card hidden xl:block">
+            <div class="flex items-center gap-2">
+              <i data-lucide="figma" class="w-4 h-4 text-cyan-DEFAULT"></i>
+              <span class="text-xs font-mono text-slate-mid">Figma Expert</span>
+            </div>
+          </div>
+          <div class="absolute -bottom-6 -right-10 bg-navy/70 backdrop-blur border border-cyan-DEFAULT/15 rounded-xl px-4 py-3 shadow-card hidden xl:block">
+            <div class="flex items-center gap-2">
+              <i data-lucide="code-2" class="w-4 h-4 text-cyan-DEFAULT"></i>
+              <span class="text-xs font-mono text-slate-mid">Full‑Stack Ready</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <a href="#about" class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-dark hover:text-cyan-DEFAULT transition-colors z-10">
+    <span class="font-mono text-xs tracking-widest">scroll</span>
+    <i data-lucide="chevrons-down" class="w-5 h-5 animate-bounce"></i>
+  </a>
+</section>
+
+<!-- ════════════════════════════════════════════
+     ABOUT
+════════════════════════════════════════════ -->
+<section id="about" class="relative py-28 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Left: decorative panel -->
+      <div class="reveal order-2 lg:order-1">
+        <div class="relative rounded-2xl overflow-hidden border border-cyan-DEFAULT/15" style="background: linear-gradient(135deg, #1A2A4A 0%, #0F0F1A 100%);">
+          <!-- Top bar -->
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5">
+            <div class="w-3 h-3 rounded-full bg-red-500/70"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-400/70"></div>
+            <div class="w-3 h-3 rounded-full bg-green-400/70"></div>
+            <span class="ml-3 font-mono text-xs text-slate-dark">rida.profile.json</span>
+          </div>
+          <div class="p-6 font-mono text-sm leading-loose">
+            <p class="text-slate-dark">{</p>
+            <p class="pl-4"><span class="text-cyan-DEFAULT">"name"</span>: <span class="text-green-400">"Rida Tahir"</span>,</p>
+            <p class="pl-4"><span class="text-cyan-DEFAULT">"role"</span>: <span class="text-green-400">"Senior UI/UX Designer"</span>,</p>
+            <p class="pl-4"><span class="text-cyan-DEFAULT">"location"</span>: <span class="text-green-400">"Islamabad, Pakistan"</span>,</p>
+            <p class="pl-4"><span class="text-cyan-DEFAULT">"education"</span>: <span class="text-green-400">"BS Computer Science"</span>,</p>
+            <p class="pl-4"><span class="text-cyan-DEFAULT">"university"</span>: <span class="text-green-400">"FJWU"</span>,</p>
+            <p class="pl-4"><span class="text-cyan-DEFAULT">"email"</span>: <span class="text-yellow-300 text-xs">"23-20911@cs.fjwu.edu.pk"</span>,</p>
+            <p class="pl-4"><span class="text-cyan-DEFAULT">"phone"</span>: <span class="text-green-400">"03195437852"</span>,</p>
+            <p class="pl-4"><span class="text-cyan-DEFAULT">"status"</span>: <span class="text-cyan-glow">"open_to_work"</span></p>
+            <p class="text-slate-dark">}</p>
+          </div>
+
+          <!-- Contact pills -->
+          <div class="px-6 pb-6 flex flex-wrap gap-2">
+            <a href="mailto:23-20911@cs.fjwu.edu.pk" class="skill-pill">
+              <i data-lucide="mail" class="w-3 h-3"></i> 23-20911@cs.fjwu.edu.pk
+            </a>
+            <a href="tel:03195437852" class="skill-pill">
+              <i data-lucide="phone" class="w-3 h-3"></i> 03195437852
+            </a>
+            <span class="skill-pill">
+              <i data-lucide="map-pin" class="w-3 h-3"></i> Islamabad, PK
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: text -->
+      <div class="reveal order-1 lg:order-2">
+        <div class="section-label mb-3">Who I Am</div>
+        <h2 class="section-title mb-6">Designer who<br/><em class="text-cyan-DEFAULT font-serif not-italic">codes</em> & thinks.</h2>
+        <div class="space-y-4 text-slate-mid leading-relaxed">
+          <p>
+            I'm a <span class="text-slate-light font-medium">Senior UI/UX Designer and Computer Science student</span> at Fatima Jinnah Women University, where I merge pixel-perfect design craft with engineering depth. My work bridges Figma prototypes and production-ready code.
+          </p>
+          <p>
+            From <span class="text-slate-light font-medium">legal SaaS platforms</span> to <span class="text-slate-light font-medium">IoT parking systems</span> to <span class="text-slate-light font-medium">voice-first AI companions</span> for the elderly — every project I touch is driven by empathy, research, and technical rigour.
+          </p>
+          <p>
+            I believe the best digital products are born when designers understand the code and engineers understand the user.
+          </p>
+        </div>
+
+        <!-- Value chips -->
+        <div class="flex flex-wrap gap-2 mt-8">
+          <span class="skill-pill"><i data-lucide="heart" class="w-3 h-3 text-rose-400"></i> Empathy-Led</span>
+          <span class="skill-pill"><i data-lucide="zap" class="w-3 h-3 text-yellow-400"></i> Research-Driven</span>
+          <span class="skill-pill"><i data-lucide="shield-check" class="w-3 h-3 text-green-400"></i> Accessible</span>
+          <span class="skill-pill"><i data-lucide="terminal" class="w-3 h-3 text-cyan-DEFAULT"></i> Code-Literate</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Divider -->
+<div class="max-w-7xl mx-auto px-10"><div class="glow-line"></div></div>
+
+<!-- ════════════════════════════════════════════
+     SKILLS
+════════════════════════════════════════════ -->
+<section id="skills" class="relative py-28">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+
+    <div class="text-center mb-16 reveal">
+      <div class="section-label mb-3">Expertise</div>
+      <h2 class="section-title">Skills & <em class="text-cyan-DEFAULT not-italic">Toolset</em></h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Design & UX -->
+      <div class="reveal project-card p-7">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-cyan-DEFAULT/10 border border-cyan-DEFAULT/20 flex items-center justify-center">
+            <i data-lucide="pen-tool" class="w-5 h-5 text-cyan-DEFAULT"></i>
+          </div>
+          <h3 class="font-serif text-xl font-semibold text-slate-light">Design & UX</h3>
+        </div>
+        <div class="space-y-4">
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1"><span class="text-slate-mid">Figma (Advanced)</span><span class="text-cyan-DEFAULT">95%</span></div>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="95"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1"><span class="text-slate-mid">User Research & Testing</span><span class="text-cyan-DEFAULT">88%</span></div>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="88"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1"><span class="text-slate-mid">Prototyping & Wireframing</span><span class="text-cyan-DEFAULT">92%</span></div>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="92"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1"><span class="text-slate-mid">Accessibility Standards (A11y)</span><span class="text-cyan-DEFAULT">80%</span></div>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="80"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual & Branding -->
+      <div class="reveal project-card p-7" style="transition-delay:0.1s">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-cyan-DEFAULT/10 border border-cyan-DEFAULT/20 flex items-center justify-center">
+            <i data-lucide="palette" class="w-5 h-5 text-cyan-DEFAULT"></i>
+          </div>
+          <h3 class="font-serif text-xl font-semibold text-slate-light">Visual & Branding</h3>
+        </div>
+        <div class="space-y-4">
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1"><span class="text-slate-mid">Adobe Illustrator</span><span class="text-cyan-DEFAULT">85%</span></div>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="85"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1"><span class="text-slate-mid">Adobe Photoshop</span><span class="text-cyan-DEFAULT">82%</span></div>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="82"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1"><span class="text-slate-mid">Corporate Identity</span><span class="text-cyan-DEFAULT">78%</span></div>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="78"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1"><span class="text-slate-mid">Typography & Color Theory</span><span class="text-cyan-DEFAULT">90%</span></div>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="90"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Development & Tech -->
+      <div class="reveal project-card p-7" style="transition-delay:0.2s">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-cyan-DEFAULT/10 border border-cyan-DEFAULT/20 flex items-center justify-center">
+            <i data-lucide="code-2" class="w-5 h-5 text-cyan-DEFAULT"></i>
+          </div>
+          <h3 class="font-serif text-xl font-semibold text-slate-light">Development & Tech</h3>
+        </div>
+        <div class="space-y-4">
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1"><span class="text-slate-mid">HTML5 & Semantic CSS</span><span class="text-cyan-DEFAULT">90%</span></div>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="90"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1"><span class="text-slate-mid">Tailwind CSS & SASS</span><span class="text-cyan-DEFAULT">88%</span></div>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="88"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1"><span class="text-slate-mid">JavaScript (ES6+)</span><span class="text-cyan-DEFAULT">82%</span></div>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="82"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1"><span class="text-slate-mid">Python (CS Fundamentals)</span><span class="text-cyan-DEFAULT">75%</span></div>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="75"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Tool pills row -->
+    <div class="mt-14 reveal">
+      <p class="section-label text-center mb-6">Also Proficient In</p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <span class="skill-pill"><i data-lucide="git-branch" class="w-3 h-3"></i> Git & GitHub</span>
+        <span class="skill-pill"><i data-lucide="database" class="w-3 h-3"></i> SQL</span>
+        <span class="skill-pill"><i data-lucide="box" class="w-3 h-3"></i> Docker</span>
+        <span class="skill-pill"><i data-lucide="cpu" class="w-3 h-3"></i> Embedded C++</span>
+        <span class="skill-pill"><i data-lucide="bar-chart-2" class="w-3 h-3"></i> D3.js</span>
+        <span class="skill-pill"><i data-lucide="globe" class="w-3 h-3"></i> React.js</span>
+        <span class="skill-pill"><i data-lucide="mic" class="w-3 h-3"></i> Voice UI</span>
+        <span class="skill-pill"><i data-lucide="layers" class="w-3 h-3"></i> Microservices</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Divider -->
+<div class="max-w-7xl mx-auto px-10"><div class="glow-line"></div></div>
+
+<!-- ════════════════════════════════════════════
+     PROJECTS
+════════════════════════════════════════════ -->
+<section id="projects" class="relative py-28">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+
+    <div class="text-center mb-16 reveal">
+      <div class="section-label mb-3">Portfolio</div>
+      <h2 class="section-title">Featured <em class="text-cyan-DEFAULT not-italic">Projects</em></h2>
+      <p class="text-slate-mid mt-4 max-w-xl mx-auto">A curated selection of work spanning UX design, embedded systems, full-stack development, and data engineering.</p>
+    </div>
+
+    <!-- Projects grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+      <!-- P1 -->
+      <a href="https://github.com/rida-ally/case-management" class="project-card reveal group block" target="_blank">
+        <div class="h-44 relative overflow-hidden" style="background: linear-gradient(135deg, #1A2A4A 0%, #0c1c38 100%);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-16 h-16 rounded-2xl bg-cyan-DEFAULT/10 border border-cyan-DEFAULT/25 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <i data-lucide="scale" class="w-8 h-8 text-cyan-DEFAULT"></i>
+            </div>
+          </div>
+          <!-- Grid pattern on card -->
+          <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(rgba(34,211,238,0.15) 1px,transparent 1px), linear-gradient(90deg,rgba(34,211,238,0.15) 1px,transparent 1px); background-size:24px 24px;"></div>
+          <div class="absolute top-4 right-4 w-2 h-2 rounded-full bg-cyan-DEFAULT animate-pulse"></div>
+        </div>
+        <div class="p-6">
+          <div class="flex flex-wrap gap-1.5 mb-3">
+            <span class="tag">UI/UX</span><span class="tag">SaaS</span><span class="tag">Figma</span>
+          </div>
+          <h3 class="font-serif text-lg font-semibold text-slate-light mb-2 group-hover:text-cyan-DEFAULT transition-colors">Legal Case Management System UX</h3>
+          <p class="text-slate-dark text-sm leading-relaxed">End-to-end UX research, wireframing, and high-fidelity Figma prototype for a SaaS legal workflow platform.</p>
+          <div class="flex items-center gap-1.5 mt-4 text-cyan-DEFAULT text-xs font-mono">
+            <span>View Project</span><i data-lucide="arrow-up-right" class="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- P2 -->
+      <a href="https://github.com/rida-ally/scholarship-portal" class="project-card reveal group block" style="transition-delay:0.05s" target="_blank">
+        <div class="h-44 relative overflow-hidden" style="background: linear-gradient(135deg, #0c2a1a 0%, #0F0F1A 100%);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-16 h-16 rounded-2xl bg-green-400/10 border border-green-400/25 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <i data-lucide="car" class="w-8 h-8 text-green-400"></i>
+            </div>
+          </div>
+          <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(rgba(74,222,128,0.15) 1px,transparent 1px), linear-gradient(90deg,rgba(74,222,128,0.15) 1px,transparent 1px); background-size:24px 24px;"></div>
+          <div class="absolute top-4 right-4 w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+        </div>
+        <div class="p-6">
+          <div class="flex flex-wrap gap-1.5 mb-3">
+            <span class="tag">CS Project</span><span class="tag">IoT</span><span class="tag">JavaScript</span>
+          </div>
+          <h3 class="font-serif text-lg font-semibold text-slate-light mb-2 group-hover:text-cyan-DEFAULT transition-colors">Smart Car Parking System</h3>
+          <p class="text-slate-dark text-sm leading-relaxed">IoT-driven automated parking solution with real-time sensor data, slot availability UI, and JavaScript dashboard.</p>
+          <div class="flex items-center gap-1.5 mt-4 text-cyan-DEFAULT text-xs font-mono">
+            <span>View Project</span><i data-lucide="arrow-up-right" class="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- P3 -->
+      <a href="https://github.com/rida-ally" class="project-card reveal group block" style="transition-delay:0.10s" target="_blank">
+        <div class="h-44 relative overflow-hidden" style="background: linear-gradient(135deg, #2a1a3a 0%, #0F0F1A 100%);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-16 h-16 rounded-2xl bg-purple-400/10 border border-purple-400/25 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <i data-lucide="gamepad-2" class="w-8 h-8 text-purple-400"></i>
+            </div>
+          </div>
+          <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(rgba(192,132,252,0.15) 1px,transparent 1px), linear-gradient(90deg,rgba(192,132,252,0.15) 1px,transparent 1px); background-size:24px 24px;"></div>
+          <div class="absolute top-4 right-4 w-2 h-2 rounded-full bg-purple-400 animate-pulse"></div>
+        </div>
+        <div class="p-6">
+          <div class="flex flex-wrap gap-1.5 mb-3">
+            <span class="tag">Frontend</span><span class="tag">React/JS</span><span class="tag">Gamification</span>
+          </div>
+          <h3 class="font-serif text-lg font-semibold text-slate-light mb-2 group-hover:text-cyan-DEFAULT transition-colors">Multi-Topic Quiz App</h3>
+          <p class="text-slate-dark text-sm leading-relaxed">Gamified quiz platform with dynamic question generation, scoring system, leaderboards, and engaging UI interactions.</p>
+          <div class="flex items-center gap-1.5 mt-4 text-cyan-DEFAULT text-xs font-mono">
+            <span>View Project</span><i data-lucide="arrow-up-right" class="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- P4 -->
+      <a href="https://github.com/rida-ally/grade-system" class="project-card reveal group block" style="transition-delay:0.15s" target="_blank">
+        <div class="h-44 relative overflow-hidden" style="background: linear-gradient(135deg, #2a1a00 0%, #0F0F1A 100%);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-16 h-16 rounded-2xl bg-yellow-400/10 border border-yellow-400/25 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <i data-lucide="cpu" class="w-8 h-8 text-yellow-400"></i>
+            </div>
+          </div>
+          <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(rgba(250,204,21,0.15) 1px,transparent 1px), linear-gradient(90deg,rgba(250,204,21,0.15) 1px,transparent 1px); background-size:24px 24px;"></div>
+          <div class="absolute top-4 right-4 w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></div>
+        </div>
+        <div class="p-6">
+          <div class="flex flex-wrap gap-1.5 mb-3">
+            <span class="tag">Embedded Systems</span><span class="tag">C++</span>
+          </div>
+          <h3 class="font-serif text-lg font-semibold text-slate-light mb-2 group-hover:text-cyan-DEFAULT transition-colors">LED Sensor Grading System</h3>
+          <p class="text-slate-dark text-sm leading-relaxed">Embedded C++ system for automated grading via LED sensor arrays — precision hardware meets software logic.</p>
+          <div class="flex items-center gap-1.5 mt-4 text-cyan-DEFAULT text-xs font-mono">
+            <span>View Project</span><i data-lucide="arrow-up-right" class="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- P5 -->
+      <a href="https://github.com/rida-ally" class="project-card reveal group block" style="transition-delay:0.20s" target="_blank">
+        <div class="h-44 relative overflow-hidden" style="background: linear-gradient(135deg, #0a1a2a 0%, #0F0F1A 100%);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-16 h-16 rounded-2xl bg-cyan-DEFAULT/10 border border-cyan-DEFAULT/25 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <i data-lucide="bar-chart-3" class="w-8 h-8 text-cyan-DEFAULT"></i>
+            </div>
+          </div>
+          <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(rgba(34,211,238,0.15) 1px,transparent 1px), linear-gradient(90deg,rgba(34,211,238,0.15) 1px,transparent 1px); background-size:24px 24px;"></div>
+          <div class="absolute top-4 right-4 w-2 h-2 rounded-full bg-cyan-DEFAULT animate-pulse"></div>
+        </div>
+        <div class="p-6">
+          <div class="flex flex-wrap gap-1.5 mb-3">
+            <span class="tag">Data Design</span><span class="tag">D3.js</span><span class="tag">UX/UI</span>
+          </div>
+          <h3 class="font-serif text-lg font-semibold text-slate-light mb-2 group-hover:text-cyan-DEFAULT transition-colors">Data Visualization Dashboard</h3>
+          <p class="text-slate-dark text-sm leading-relaxed">Interactive data dashboard with D3.js charts, filtering, and responsive UX design for complex analytical insights.</p>
+          <div class="flex items-center gap-1.5 mt-4 text-cyan-DEFAULT text-xs font-mono">
+            <span>View Project</span><i data-lucide="arrow-up-right" class="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- Bonus: HamSafar -->
+      <div class="project-card reveal p-6 flex flex-col justify-between" style="transition-delay:0.25s; border-color: rgba(34,211,238,0.22); background: linear-gradient(135deg,rgba(34,211,238,0.06) 0%, rgba(15,15,26,0.95) 100%);">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-cyan-DEFAULT/10 border border-cyan-DEFAULT/25 flex items-center justify-center">
+              <i data-lucide="mic" class="w-5 h-5 text-cyan-DEFAULT"></i>
+            </div>
+            <div class="flex flex-wrap gap-1.5"><span class="tag">Voice UI</span><span class="tag">AI/UX</span><span class="tag">Urdu</span></div>
+          </div>
+          <h3 class="font-serif text-lg font-semibold text-slate-light mb-2">HamSafar — Urdu AI Companion</h3>
+          <p class="text-slate-dark text-sm leading-relaxed">Voice-first UI/UX designed for elderly Pakistani users. Accessible, empathetic, and culturally grounded AI interface in Urdu.</p>
+        </div>
+        <div class="mt-4 flex items-center gap-2 text-xs font-mono text-cyan-dim">
+          <i data-lucide="sparkles" class="w-3 h-3 text-cyan-DEFAULT"></i>
+          <span>Concept / In Progress</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Extra notable projects -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="reveal project-card p-6">
+        <div class="flex items-center gap-3 mb-3">
+          <i data-lucide="layers" class="w-5 h-5 text-cyan-DEFAULT flex-shrink-0"></i>
+          <h3 class="font-serif text-base font-semibold text-slate-light">Microservices Architecture</h3>
+        </div>
+        <div class="flex flex-wrap gap-1.5 mb-3"><span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">DevOps</span></div>
+        <p class="text-slate-dark text-sm leading-relaxed">Back-end/DevOps engineering project deploying scalable microservices with Docker containers and Kubernetes orchestration.</p>
+      </div>
+      <div class="reveal project-card p-6" style="transition-delay:0.05s">
+        <div class="flex items-center gap-3 mb-3">
+          <i data-lucide="award" class="w-5 h-5 text-yellow-400 flex-shrink-0"></i>
+          <h3 class="font-serif text-base font-semibold text-slate-light">Merit Scholarship Portal & Grading System</h3>
+        </div>
+        <div class="flex flex-wrap gap-1.5 mb-3"><span class="tag">Database</span><span class="tag">Portal</span><span class="tag">Logic</span></div>
+        <p class="text-slate-dark text-sm leading-relaxed">Automated merit-based scholarship system with custom grading logic, a complete database schema, and admin portal.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Divider -->
+<div class="max-w-7xl mx-auto px-10"><div class="glow-line"></div></div>
+
+<!-- ════════════════════════════════════════════
+     CONTACT
+════════════════════════════════════════════ -->
+<section id="contact" class="relative py-28">
+  <div class="orb w-80 h-80 bg-cyan-DEFAULT opacity-5 bottom-0 right-0 translate-x-1/3 translate-y-1/3"></div>
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+
+    <div class="text-center mb-16 reveal">
+      <div class="section-label mb-3">Get In Touch</div>
+      <h2 class="section-title">Let's <em class="text-cyan-DEFAULT not-italic">collaborate</em></h2>
+      <p class="text-slate-mid mt-4 max-w-lg mx-auto">Have a project idea, a design challenge, or just want to talk UX? I'd love to hear from you.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+
+      <!-- Left: Info -->
+      <div class="reveal space-y-6">
+        <div class="project-card p-6 flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-cyan-DEFAULT/10 border border-cyan-DEFAULT/20 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="mail" class="w-6 h-6 text-cyan-DEFAULT"></i>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-slate-dark mb-1">Email</p>
+            <a href="mailto:23-20911@cs.fjwu.edu.pk" class="text-slate-light hover:text-cyan-DEFAULT transition-colors text-sm break-all">23-20911@cs.fjwu.edu.pk</a>
+          </div>
+        </div>
+        <div class="project-card p-6 flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-cyan-DEFAULT/10 border border-cyan-DEFAULT/20 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="phone" class="w-6 h-6 text-cyan-DEFAULT"></i>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-slate-dark mb-1">Phone</p>
+            <a href="tel:03195437852" class="text-slate-light hover:text-cyan-DEFAULT transition-colors">03195437852</a>
+          </div>
+        </div>
+        <div class="project-card p-6 flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-cyan-DEFAULT/10 border border-cyan-DEFAULT/20 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="map-pin" class="w-6 h-6 text-cyan-DEFAULT"></i>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-slate-dark mb-1">Location</p>
+            <p class="text-slate-light text-sm">Islamabad, Pakistan</p>
+          </div>
+        </div>
+
+        <!-- Social links -->
+        <div class="project-card p-6">
+          <p class="text-xs font-mono text-slate-dark mb-4 tracking-widest">Find Me Online</p>
+          <div class="flex gap-3">
+            <a href="https://instagram.com/pinkskie" target="_blank" class="social-btn flex-1 h-12 rounded-xl gap-2 text-sm" style="width:auto;">
+              <i data-lucide="instagram" class="w-5 h-5"></i>
+              <span class="font-mono text-xs hidden sm:block">Instagram</span>
+            </a>
+            <a href="https://www.linkedin.com/in/rida-tahir-b19534307/" target="_blank" class="social-btn flex-1 h-12 rounded-xl gap-2 text-sm" style="width:auto;">
+              <i data-lucide="linkedin" class="w-5 h-5"></i>
+              <span class="font-mono text-xs hidden sm:block">LinkedIn</span>
+            </a>
+            <a href="https://github.com/rida-ally" target="_blank" class="social-btn flex-1 h-12 rounded-xl gap-2 text-sm" style="width:auto;">
+              <i data-lucide="github" class="w-5 h-5"></i>
+              <span class="font-mono text-xs hidden sm:block">GitHub</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="reveal" style="transition-delay:0.1s">
+        <form class="project-card p-8 space-y-5" id="contact-form">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-mono text-slate-dark mb-2 tracking-wide">Your Name</label>
+              <input type="text" name="name" placeholder="Jane Smith" class="form-input" required />
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-slate-dark mb-2 tracking-wide">Email Address</label>
+              <input type="email" name="email" placeholder="hello@example.com" class="form-input" required />
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-slate-dark mb-2 tracking-wide">Subject</label>
+            <input type="text" name="subject" placeholder="Let's work together on..." class="form-input" />
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-slate-dark mb-2 tracking-wide">Message</label>
+            <textarea name="message" rows="5" placeholder="Tell me about your project, idea, or opportunity..." class="form-input resize-none" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary w-full justify-center text-base py-3.5">
+            <i data-lucide="send" class="w-5 h-5"></i> Send Message
+          </button>
+          <p id="form-msg" class="text-center text-xs font-mono text-cyan-DEFAULT hidden">✓ Message sent! I'll get back to you soon.</p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<footer class="relative border-t border-white/5 py-12 z-10">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      <!-- Brand -->
+      <div class="flex items-center gap-3">
+        <span class="w-9 h-9 rounded-lg bg-cyan-DEFAULT flex items-center justify-center text-obsidian font-serif font-bold text-xl leading-none">R</span>
+        <div>
+          <p class="font-serif font-semibold text-slate-light leading-tight">Rida Tahir</p>
+          <p class="font-mono text-xs text-slate-dark">Senior UI/UX Designer & CS</p>
+        </div>
+      </div>
+
+      <!-- Nav -->
+      <nav class="flex gap-6">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- Socials -->
+      <div class="flex gap-3">
+        <a href="https://instagram.com/pinkskie" target="_blank" class="social-btn" aria-label="Instagram"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+        <a href="https://www.linkedin.com/in/rida-tahir-b19534307/" target="_blank" class="social-btn" aria-label="LinkedIn"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+        <a href="https://github.com/rida-ally" target="_blank" class="social-btn" aria-label="GitHub"><i data-lucide="github" class="w-4 h-4"></i></a>
+      </div>
+    </div>
+
+    <div class="glow-line my-8"></div>
+
+    <p class="text-center font-mono text-xs text-slate-dark">
+      &copy; 2026 Rida Tahir. All rights reserved. Designed &amp; Developed with <span class="text-rose-400">&#9829;</span> in Islamabad, Pakistan.
+    </p>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════ -->
+<script>
+  // ── Lucide icons init ──
+  lucide.createIcons();
+
+  // ── Sticky nav glass effect ──
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      navbar.style.background = 'rgba(15,15,26,0.82)';
+      navbar.style.backdropFilter = 'blur(20px)';
+      navbar.style.borderBottom = '1px solid rgba(34,211,238,0.08)';
+    } else {
+      navbar.style.background = 'transparent';
+      navbar.style.backdropFilter = 'none';
+      navbar.style.borderBottom = 'none';
+    }
+  });
+
+  // ── Mobile menu ──
+  document.getElementById('menu-toggle').addEventListener('click', () => {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('open');
+    const icon = document.querySelector('#menu-toggle i');
+    icon.setAttribute('data-lucide', menu.classList.contains('open') ? 'x' : 'menu');
+    lucide.createIcons();
+  });
+
+  // Close mobile menu on link click
+  document.querySelectorAll('#mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.remove('open');
+      const icon = document.querySelector('#menu-toggle i');
+      icon.setAttribute('data-lucide', 'menu');
+      lucide.createIcons();
+    });
+  });
+
+  // ── Scroll reveal ──
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // ── Skill bar animation ──
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.w + '%';
+        });
+        barObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.project-card').forEach(card => barObserver.observe(card));
+
+  // ── Contact form mock submit ──
+  document.getElementById('contact-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('form-msg');
+    msg.classList.remove('hidden');
+    e.target.reset();
+    setTimeout(() => msg.classList.add('hidden'), 5000);
+  });
+
+  // ── Typewriter effect for role ──
+  const roles = ['Senior UI/UX Designer', 'Computer Scientist', 'Frontend Developer', 'Visual Storyteller'];
+  let ri = 0, ci = 0, deleting = false;
+  const typeEl = document.querySelector('.cursor');
+  if (typeEl) {
+    const parent = typeEl.parentElement;
+    function type() {
+      const current = roles[ri];
+      if (!deleting) {
+        ci++;
+        parent.childNodes[0].textContent = current.slice(0, ci);
+        if (ci === current.length) { deleting = true; setTimeout(type, 1800); return; }
+      } else {
+        ci--;
+        parent.childNodes[0].textContent = current.slice(0, ci);
+        if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; }
+      }
+      setTimeout(type, deleting ? 45 : 90);
+    }
+    // Set initial text node
+    const textNode = document.createTextNode(roles[0]);
+    parent.insertBefore(textNode, typeEl);
+    typeEl.previousSibling && (typeEl.previousSibling.textContent = '');
+    setTimeout(type, 1000);
+  }
+</script>
+
+</body>
+</html>
